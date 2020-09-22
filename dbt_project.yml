@@ -1,0 +1,60 @@
+name: '{company_name}'
+version: 0.1.0
+
+require-dbt-version: ">=0.18.0"
+config-version: 2
+
+# Configure database connection profile for dbt to use
+profile: '{profile}'
+
+# Set paths for dbt objects
+analysis-paths: ["analysis"]
+data-paths: ["data"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+source-paths: ["models"]
+test-paths: ["tests"]
+
+log-path: "logs"
+modules-path: "dbt_modules"
+target-path: "target"
+clean-targets:
+    - "dbt_modules"
+    - "target"
+
+# Set query behavior: prepend comments and quoting
+query-comment: "{{ query_comment(node) }}"
+quoting:
+  database: true
+  schema: true
+  identifier: true
+
+
+# DBT MODELS
+models:
+    {company_name}:
+        +enabled: true
+        +materialized: view
+        +persist_docs:
+            relation: true
+            columns: true
+        
+        staging:
+            +enabled: true
+        
+        marts:
+            +enabled: true
+            +materialized: table
+
+
+
+# Create scoped variables
+vars:
+    {company_name}:
+        dbt_project_created_date: '2020-09-21'  # Set as date when dbt project first created
+
+
+# Define dbt data seeds
+seeds:
+    {company_name}:
+      +enabled: true

@@ -1,0 +1,12 @@
+.DS_Store
+.vscode/
+.idea/
+env/
+venv/
+
+target/*
+!target/.gitkeep
+dbt_modules/*
+!dbt_modules/.gitkeep
+logs/*
+!logs/.gitkeep

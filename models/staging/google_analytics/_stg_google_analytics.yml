@@ -1,0 +1,20 @@
+version: 2
+
+models:
+    - name: stg_ga__sessions
+      description: "Google Analytics staged session data"
+      columns:
+          - name: table_pkey
+            description: "The primary key for this table"
+            tests:
+                - primary_key
+          - name: visit_number
+            description: "The number of times this visitor has visited the site"
+            tests:
+                - not_null
+          - name: visit_date
+            description: "The date that the site was visited"
+            tests:
+                - not_null
+          - name: channel_grouping
+            description: "Grouped marketing attributed source"

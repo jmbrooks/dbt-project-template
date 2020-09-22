@@ -1,0 +1,44 @@
+version: 2
+
+sources:
+  - name: google_analytics
+    description: Sample Google Analytics data from BigQuery's public datasets
+    loader: BigQuery Transfer
+
+    meta:
+      contains_pii: false
+      owner: "@jb"
+      maturity: dev
+
+    tags:
+      - marketing
+      - google
+
+    tables:
+      - name: ga_sessions
+        description: Denormalized Google Analytics partitioned session data for visit usage, device info, hits, time on site, etc.
+        identifier: ga_sessions_*
+        tests:
+          - primary_key:
+              column_name: "fullVisitorId || '-' || visitStartTime"
+        columns:
+          - name: date
+            tests:
+              - not_null:
+                  severity: warn
+          - name: trafficSource.campaign
+            tests:
+              - not_null:
+                  severity: warn
+          - name: socialEngagementType
+            tests:
+              - not_null:
+                  severity: warn
+          - name: channelGrouping
+            description: "Grouped marketing channels based on the visitor's attributed source"
+            tests:
+              - not_null:
+                  severity: warn
+              - accepted_values:
+                  values: ['Direct', 'Social', 'Paid Search', 'Affiliates', '(Other)', 'Referral', 'Organic Search', 'Display']
+                  severity: warn

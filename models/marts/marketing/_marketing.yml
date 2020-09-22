@@ -1,0 +1,51 @@
+version: 2
+
+models:
+    - name: fct_ga_channel_groupings
+      description: "{{ doc('fct_ga_channel_groupings') }}"
+      columns:
+          - name: table_pkey
+            description: "The primary key for this table"
+            tests:
+                - primary_key
+          - name: channel_grouping
+            description: "The grouped name of the channel from which the visitor originated"
+            tests:
+                - not_null
+          - name: visit_date
+            description: "The date when the site was recorded as visited via Google Analytics"
+            tests:
+                - not_null
+          - name: total_visits
+            description: "Sum of site visits"
+          - name: total_hits
+            description: "Sum of events that are tracked and sent via Google Analytics"
+          - name: total_page_views
+            description: "Sum of times site pages were viewed"
+          - name: total_time_on_site
+            description: "Sum of time on the site, in seconds"
+          - name: total_bounces
+            description: "The total number of times the user visited the site via a search or ad, then bounced right off without another page view"
+          - name: total_transactions
+            description: "The total number of site transactions"
+          - name: total_transaction_revenue
+            description: "Sum of revenue from site transactions"
+          - name: total_new_visits
+            description: "Sum of visitors to the site who had never visited the site before"
+          - name: total_screen_views
+            description: "The total number of mobile screen views"
+          - name: total_unique_screen_views
+            description: "The total number of distinct mobile screen views, does not count revisits by same user"
+          - name: total_time_on_screen
+            description: "Sum of time in seconds viewing mobile page screen"
+          - name: avg_session_quality_dim
+            description: "Average session quality for users; a general measure of how close visits were to generating a sale on the site; average is between 0 and 100, where higher is more likely to generate a sale"
+      
+    - name: dim_ga_channel_groupings
+      description: "{{ doc('dim_ga_channel_groupings') }}"
+      columns:
+          - name: channel_grouping
+            description: "The bucketed marketing source channel"
+            tests:
+                - primary_key
+

@@ -1,0 +1,62 @@
+version: 2
+
+models:
+    - name: dim_date
+      description: "{{ doc('dim_date') }}"
+      columns:
+          - name: calendar_date
+            description: "The calendar date of the form YYYY-MM-DD (e.g. 2020-02-28), also serves as the primary key for this table. Note that 2999-12-31 represents 'multiple dates' and 1900-01-01 represents an unknown date"
+            tests:
+                - primary_key
+          - name: is_weekday
+            description: "True if the date is a week day (Mon - Fri), otherwise False"
+            tests:
+                - not_null
+          - name: is_holiday
+            description: "True if the date is a holiday in the United States (based on standard federal holidays), otherwise False"
+            tests:
+                - not_null
+          - name: is_workday
+            description: "True if the date is a working day- a day of the week and not a holiday, otherwise False"
+            tests:
+                - not_null
+          - name: is_leap_year
+            description: "True if the year is part of a leap year, otherwise False"
+            tests:
+                - not_null
+
+    - name: dim_country
+      description: "{{ doc('dim_country') }}"
+      columns:
+          - name: country_name
+            description: "The full name of the country, also serves as the primary key for this table"
+            tests:
+                - primary_key
+          - name: country_fips_code
+            description: "The unique 2-character FIPS classification code of the country"
+            tests:
+                - unique
+          - name: subregion
+            description: "The Subregion the country is in. Subregions are parts of continents representing set geographic regions (e.g. Southeastern Asia, Melanesia, Caribbean, Central America)"
+          - name: continent_name
+            description: "The full name of the continent (e.g. Africa, Europe, Asia)"
+            tests:
+                - not_null
+      
+    - name: dim_state
+      description: "{{ doc('dim_state') }}"
+      columns:
+          - name: state_id
+            description: "The unique numeric classification code of the state, also serves as the primary key for this table"
+            tests:
+                - primary_key
+          - name: state
+            description: "The 2-character abbreviation of the state (e.g. CA, AZ, NY)"
+            tests:
+                - not_null
+                - unique
+          - name: state_name
+            description: "The full name of the state (e.g. California, Arizona, New York)"
+            tests:
+                - not_null
+                - unique
