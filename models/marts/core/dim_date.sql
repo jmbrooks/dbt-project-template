@@ -119,7 +119,7 @@
       calendar_year || '-' || calendar_quarter as year_quarter,
       NULL as custom_date_detail
     from
-      {{ ref('dim_date_seed') }}
+      {{ ref('seed_dim_date') }}
     where
       calendar_date >= '{{ var("analysis_start_date") }}'
       and calendar_date <= date(extract(year from {{ current_time }}), 12, 31)

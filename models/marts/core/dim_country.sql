@@ -48,4 +48,4 @@
       END as continent_name,
       cast(sub_continent_name as string) as subcontinent_name
     from
-      {{ ref('raw_countries') }}
+      {{ ref('seed_raw_countries') }}

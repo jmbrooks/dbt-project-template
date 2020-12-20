@@ -1,0 +1,69 @@
+version: 2
+
+seeds:
+  - name: seed_dim_date
+    description: "{{ doc('seed_dim_date') }}"
+    tests:
+      - dbt_expectations.expect_table_row_count_to_equal:
+          value: 10227
+
+    columns:
+      - name: calendar_date
+        description: A unique calendar day, the unique identifier for the table
+        tests:
+          - primary_key
+
+  - name: seed_raw_countries
+    description: "{{ doc('seed_raw_countries') }}"
+    tests:
+      - dbt_expectations.expect_table_row_count_to_equal:
+          value: 278
+
+    columns:
+      - name: country_name
+        description: The full name of the country, a natural primary key of the table
+        tests:
+          - primary_key
+      - name: fips_code
+        description: The FIPS code, a unique international identifier for geopolitical entities, in this case countries
+        tests:
+          - unique
+
+  - name: seed_raw_states_usa
+    description: "{{ doc('seed_raw_states_usa') }}"
+    tests:
+      - dbt_expectations.expect_table_row_count_to_equal:
+          value: 56
+
+    columns:
+      - name: state_geo_id
+        description: The Geographic ID for the U.S. state, and a unique identifier for the table
+        tests:
+          - primary_key
+      - name: state
+        description: The two-letter abbreviation for the state, a natural primary key of the table
+        tests:
+          - unique
+          - not_null
+      - name: state_name
+        description: The full name of the state or province
+        tests:
+          - unique
+          - not_null
+
+  - name: snowflake_contract_rates
+    description: "{{ doc('snowflake_contract_rates') }}"
+    tests:
+      - dbt_expectations.expect_table_columns_to_match_set:
+          column_list: ["effective_date", "rate"]
+
+    columns:
+      - name: effective_date
+        description: The effective start date (e.g. 2020-11-01) of the Snowflake contract (ask your Snowflake AE if you're not sure)
+        tests:
+          - unique
+          - not_null
+      - name: rate
+        description: The cost per Snowflake credit associated with your contract
+        tests:
+          - not_null

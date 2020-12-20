@@ -1,18 +1,18 @@
-name: '{company_name}'
+name: 'meep'
 version: 0.1.0
 
 require-dbt-version: ">=0.18.0"
 config-version: 2
 
 # Configure database connection profile for dbt to use
-profile: '{profile}'
+profile: 'integration_tests'
 
 # Set paths for dbt objects
 analysis-paths: ["analysis"]
 data-paths: ["data"]
 macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
 source-paths: ["models"]
+snapshot-paths: ["snapshots"]
 test-paths: ["tests"]
 
 log-path: "logs"
@@ -25,14 +25,14 @@ clean-targets:
 # Set query behavior: prepend comments and quoting
 query-comment: "{{ query_comment(node) }}"
 quoting:
-  database: true
-  schema: true
-  identifier: true
+  database: false
+  schema: false
+  identifier: false
 
 
 # DBT MODELS
 models:
-    {company_name}:
+    meep:
         +enabled: true
         +materialized: view
         +persist_docs:
@@ -41,20 +41,30 @@ models:
         
         staging:
             +enabled: true
+            +schema: intermediate
         
         marts:
             +enabled: true
             +materialized: table
+            core:
+                +schema: core
+            marketing:
+                +schema: marketing
 
 
-
-# Create scoped variables
+# Project variables
 vars:
-    {company_name}:
-        dbt_project_created_date: '2020-09-21'  # Set as date when dbt project first created
+    meep:
+        dbt_project_created_date: '2020-09-21'  # <-- Set as date when dbt project first created
+        analysis_start_date: '2016-01-01'  # <-- Earliest time when organization started tracking data
+        analysis_end_date: dbt_utils.current_timestamp()
+        source_database: lake  # <-- Set as name of the raw source database where data is ingested
 
 
-# Define dbt data seeds
+# Data seeds
 seeds:
-    {company_name}:
+    +quote_columns: false
+    +schema: intermediate
+    
+    meep:
       +enabled: true

@@ -1,0 +1,12 @@
+version: 2
+
+macros:
+  - name: generate_schema_name
+    description: "Environment management macro to replace the default 'get_custom_schema' behaviour, which will ensure schemas in prod match schema properties exactly, and are appended in all other environments"
+  
+  - name: query_comment
+    description: "Enrich query comments for dbt-generated SQL to include lots of details that help with SQL execution history (e.g. node, 
+  target, profile, dbt version)"
+
+  - name: test_primary_key
+    description: "Schema test macro - a helper test for confirming a column is the primary key. Tests that there are no nulls and uniqueness"

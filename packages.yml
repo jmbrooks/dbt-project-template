@@ -1,7 +1,17 @@
 packages:
+  # Utilities
   - package: fishtown-analytics/dbt_utils
     version: 0.6.2
   - package: fishtown-analytics/audit_helper
     version: 0.3.0
   - package: fishtown-analytics/codegen
     version: 0.3.1
+  - package: calogica/dbt_expectations
+    version: 0.2.0
+  - package: Montreal-Analytics/snowflake_utils
+    version: 0.2.0
+  # Data Packages
+  - package: fivetran/fivetran_log
+    version: 0.2.0
+  - package: gitlabhq/snowflake_spend
+    version: 1.2.0

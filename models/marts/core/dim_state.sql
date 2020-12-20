@@ -65,4 +65,4 @@
       latitude,
       longitude
     from
-      {{ ref('raw_states_usa') }}
+      {{ ref('seed_raw_states_usa') }}
