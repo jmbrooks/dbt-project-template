@@ -1,11 +1,11 @@
-name: 'meep'
+name: '{company_name}'
 version: 0.1.0
 
 require-dbt-version: ">=0.18.0"
 config-version: 2
 
 # Configure database connection profile for dbt to use
-profile: 'integration_tests'
+profile: '{profile}'
 
 # Set paths for dbt objects
 analysis-paths: ["analysis"]
@@ -32,7 +32,7 @@ quoting:
 
 # DBT MODELS
 models:
-    meep:
+    {company_name}:
         +enabled: true
         +materialized: view
         +persist_docs:
@@ -54,7 +54,7 @@ models:
 
 # Project variables
 vars:
-    meep:
+    {company_name}:
         dbt_project_created_date: '2020-09-21'  # <-- Set as date when dbt project first created
         analysis_start_date: '2016-01-01'  # <-- Earliest time when organization started tracking data
         analysis_end_date: dbt_utils.current_timestamp()
@@ -66,5 +66,5 @@ seeds:
     +quote_columns: false
     +schema: intermediate
     
-    meep:
+    {company_name}:
       +enabled: true
